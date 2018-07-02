@@ -1,0 +1,36 @@
+.table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table td, .table th {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table tr:hover {background-color: #ddd;}
+
+.table tr:nth-child(even){background-color: #f2f2f2;}
+
+#NewlyPassed th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+#NewlyFailed th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #FFD480;
+    color: white;
+}
+
+#NewlyErrored th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #FF9999;
+    color: white;
+}

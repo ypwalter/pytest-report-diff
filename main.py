@@ -158,6 +158,32 @@ def returnTree(filename):
     tree = etree.fromstring(data)
     return tree
 
+# generate HTML Table accordingly
+def generateTable(ipt, text):
+    start = "<table id=\"" + text.replace(" ", "") + "\" class=\"table\"><tr><th>" + text + "</th></tr>"
+    end = "</table>"
+    content = ""
+
+    ipt.sort()
+    for i in ipt:
+        content += "<tr><td>" + i + "</td></tr>"
+
+    return start + content + end
+
+# generate HTML in designated format
+def generateHTML(p, f, e):
+    start = "<html><head><link rel=\"stylesheet\" href=\"styles.css\"><body>"
+    end = "</body></html>"
+    content = ""
+    content += generateTable(f, "Newly Failed")
+    content += generateTable(p, "Newly Passed")
+    content += generateTable(e, "Newly Errored")
+    HTML = start + content + end
+    HTML = HTML.replace("<script>", "script")
+    HTML = HTML.replace("</script>", "/script")
+
+    return HTML
+
 # this is the main function for diff two report
 def main():
     arguments = docopt(__doc__)
@@ -173,8 +199,12 @@ def main():
 
     # get newly failed test cases (more to choose from DiffResults class)
     # TODO: change this to output html later
-    for i in dr.return_newly_failed():
-        print i
+    new_pass = dr.return_newly_passed()
+    new_failure = dr.return_newly_failed()
+    new_error = dr.return_newly_error()
+    HTML = generateHTML(new_pass, new_failure, new_error)
+    with open(output_file, "w") as f:
+        f.write(HTML)
 
 if __name__ == "__main__":
     main()
