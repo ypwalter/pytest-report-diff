@@ -142,6 +142,8 @@ def stripTags(text):
 
     text = scripts.sub('', text)
     text = css.sub('', text)
+    text = text.replace("", "")
+    text = text.replace("", "")
     return text
 
 # read and return the lxml object tree
@@ -153,6 +155,9 @@ def returnTree(filename):
 
     # remove data that could be harmful to lxml
     data = stripTags(data)
+
+    with open("temp", "w") as f:
+        f.write(data)
 
     # get a lxml object
     tree = etree.fromstring(data)
@@ -189,7 +194,8 @@ def main():
     arguments = docopt(__doc__)
 
     file1, file2, output_file = arguments["--previous"], arguments["--new"], arguments["--output"]
-    tree1, tree2 = returnTree(file1), returnTree(file2)
+    tree1 = returnTree(file1)
+    tree2 = returnTree(file2)
 
     # get test results object for each html file
     test_results1, test_results2 = TestResults(tree1), TestResults(tree2)
